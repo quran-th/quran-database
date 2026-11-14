@@ -1,0 +1,12 @@
+{
+  "name": "quran-database",
+  "private": true,
+  "description": "Thai Quran translations of the Open Thai Quran Project as versioned data files, with a converter to other formats",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "convert": "node scripts/convert.mjs --to all"
+  }
+}

@@ -10,9 +10,6 @@ to other formats.
   listed verse by verse.
 - **A converter** produces QuranEnc, Tanzil, Quran.com and JSON formats from the canonical files.
 
-> **Status:** the first release (`2026.11.14`) is being prepared. The data files and the
-> converter described below will appear here with it.
-
 ## Translations
 
 | Slug | Source id | Translation | Verses | Footnotes |
@@ -23,7 +20,7 @@ to other formats.
 ## Repository layout
 
 ```
-data/<slug>.csv          canonical translation file (one per source)
+data/<slug>/NNN.csv      canonical translation, one file per surah (001.csv … 114.csv)
 data/<slug>.meta.json    source info, version, counts, checksum, known data issues
 changes/<version>.csv    every row changed in that release, old and new text
 releases/<version>.md    release notes for that release
@@ -33,7 +30,7 @@ scripts/convert.mjs      converts the canonical files into other formats
 
 ## Data schemas
 
-### `data/<slug>.csv`
+### `data/<slug>/NNN.csv`
 
 | Column | Type | Description |
 |--------|------|-------------|
@@ -50,7 +47,8 @@ sura,aya,footnote,text
 ```
 
 - **Order:** rows follow the mushaf order: surah, then verse. Each verse row comes first, followed
-  directly by its footnote rows in ascending order. Each file has 6236 verse rows.
+  directly by its footnote rows in ascending order. Each file holds one surah, named by its
+  zero-padded number; together the 114 files have 6236 verse rows.
 - **Footnote markers:** `(*n*)` in a verse text points to footnote `n` of that verse. Numbering
   starts at 1 in every verse.
 - **No Arabic text:** there is no Arabic column. Join the rows to your own Arabic text on
@@ -63,7 +61,7 @@ sura,aya,footnote,text
 | `source` | `id`, `slug`, `name`, `shortName`, `author`, `language` |
 | `version`, `previousVersion` | This release and the one before it (`null` for the first) |
 | `verseCount`, `footnoteCount` | Row counts in the CSV |
-| `sha256` | Checksum of `data/<slug>.csv` |
+| `sha256` | Checksum of the whole translation as one CSV: the header once, then the rows of `001.csv` … `114.csv` in order |
 | `emptyTranslations` | Verses published with empty text |
 | `footnoteMismatches` | Verses whose `(*n*)` markers and footnotes do not match |
 | `embeddedLineBreaks` | Rows whose text contains a line break (`sura:aya`, or `sura:aya:n` for a footnote) |

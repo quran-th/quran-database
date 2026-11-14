@@ -1,0 +1,18 @@
+{
+  "source": {
+    "id": 4,
+    "slug": "al-mukhtasar",
+    "name": "ตัฟซีร อัล-มุคตะศ็อร (อธิบายความหมายสรุป)",
+    "shortName": "อัล-มุคตะศ็อร",
+    "author": "ศูนย์ตัฟซีรเพื่อการศึกษาอัลกุรอาน (ซาอุดีอาระเบีย)",
+    "language": "th"
+  },
+  "version": "2026.11.14",
+  "previousVersion": null,
+  "verseCount": 6236,
+  "footnoteCount": 0,
+  "sha256": "20d3e7a3b8d3492e7c91a52e276cce5f4a0f71f4059a889c5fd11242407a5f02",
+  "emptyTranslations": [],
+  "footnoteMismatches": [],
+  "embeddedLineBreaks": []
+}
