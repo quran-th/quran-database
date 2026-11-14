@@ -1,3 +1,5 @@
+<img width="1774" height="887" alt="image" src="https://github.com/user-attachments/assets/12a16f56-b001-4b41-aac4-c460da486b01" />
+
 # quran-database
 
 Thai translations of the Quran from the [Open Thai Quran Project](https://quran.in.th), published as
