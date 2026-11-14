@@ -119,12 +119,15 @@ node scripts/convert.mjs --to tanzil --source king-fahd
 # --to quranenc | tanzil | qurancom | json | all
 ```
 
-| `--to` | Output | Notes |
-|--------|--------|-------|
-| `quranenc` | `out/<slug>/quranenc/<slug>.csv` | Columns `id,sura,aya,translation,footnotes`, as in QuranEnc's download |
-| `tanzil` | `out/<slug>/tanzil/th.<slug>.txt` | `sura\|aya\|text` lines, footnote markers removed |
-| `qurancom` | `out/<slug>/quran-com/<slug>.json` | Quran.com API v4 shape, markers as `<sup foot_note=ID>n</sup>` |
-| `json` | `out/<slug>/json/<slug>.json` | `{ "verses": { "2:3": { "translation", "footnotes" } } }` |
+| `--to` | Output |
+|--------|--------|
+| `quranenc` | `out/<slug>/quranenc/<slug>.csv` |
+| `tanzil` | `out/<slug>/tanzil/th.<slug>.txt` |
+| `qurancom` | `out/<slug>/quran-com/<slug>.json` |
+| `json` | `out/<slug>/json/<slug>.json` |
+
+The output is deterministic: the same canonical files always give the same bytes. For Tanzil, the
+converter prints the verses it adjusted.
 
 ## Contributing
 
