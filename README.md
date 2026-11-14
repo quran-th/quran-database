@@ -1,7 +1,8 @@
 # quran-database
 
 Thai translations of the Quran from the [Open Thai Quran Project](https://quran.in.th), published as
-plain, versioned data files.
+plain, versioned data files. This is a data-only repository: the only code in it is the converter
+to other formats.
 
 - **One canonical CSV per translation.** Every verse and footnote, with the text exactly as stored.
 - **Every release is a git tag** (`vYYYY.MM.DD`), so any change to the text shows up in `git diff`.
@@ -9,8 +10,8 @@ plain, versioned data files.
   listed verse by verse.
 - **A converter** produces QuranEnc, Tanzil, Quran.com and JSON formats from the canonical files.
 
-> **Status:** the first release (`2026.11.14`) is being prepared. The data files and scripts
-> described below will appear here with it.
+> **Status:** the first release (`2026.11.14`) is being prepared. The data files and the
+> converter described below will appear here with it.
 
 ## Translations
 
@@ -27,8 +28,7 @@ data/<slug>.meta.json    source info, version, counts, checksum, known data issu
 changes/<version>.csv    every row changed in that release, old and new text
 releases/<version>.md    release notes for that release
 CHANGELOG.md             one short section per release, newest first
-scripts/                 export, verify, convert and release scripts
-test/                    unit tests and an offline fixture
+scripts/convert.mjs      converts the canonical files into other formats
 ```
 
 ## Data schemas
@@ -100,16 +100,15 @@ old and a new excerpt.
 - No timestamps inside data files. The release version appears only in `meta.json`,
   `CHANGELOG.md` and the release notes.
 
-## Setup
+## Converting to other formats
 
-Requires Node.js 20 or later. There are no dependencies to install.
+The data files need no tools: read the CSV with any RFC 4180 reader. To get another format, use the
+converter. It needs Node.js 20 or later and has no dependencies.
 
 ```sh
 git clone https://github.com/quran-th/quran-database.git
 cd quran-database
-npm test           # offline unit tests
-npm run verify     # checks the data files: order, counts, checksums, converter round trips
-npm run convert    # writes every format for every translation into ./out (git-ignored)
+npm run convert    # every format for every translation into ./out (git-ignored)
 ```
 
 Convert one translation to one format:
@@ -142,19 +141,12 @@ the files under `data/` by hand. Report a correction in either of two ways:
 Approved corrections reach this repository with the next release, and they are listed in its
 release notes.
 
-**Code changes.** Fixes to the scripts, converters and documentation are welcome as pull requests.
-Run `npm test` and `npm run verify` before you open one.
+**Converter and documentation.** Fixes to the converter and this README are welcome as pull
+requests.
 
-**Cutting a release (maintainers).** Run these after the fixes are live in the production
-database:
-
-```sh
-node scripts/export.mjs --version 2026.11.14
-npm run verify
-git add -A && git commit -m "Release 2026.11.14" && git tag v2026.11.14
-```
-
-`npm run release` prints these commands for you and runs nothing.
+**Releases.** The project's release tooling writes the data, change lists and release notes
+from the production database, outside this repository. Each release is one commit and a
+`vYYYY.MM.DD` tag.
 
 ## License
 
