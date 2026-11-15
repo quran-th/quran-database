@@ -43,17 +43,18 @@ function writeFiles(outDir, files) {
   }
 }
 
-const USAGE = `usage: node scripts/convert.mjs --to <${FORMATS.join('|')}|all> [--source <slug>|all] [--out DIR]
+const USAGE = `usage: node scripts/convert.mjs --to <${FORMATS.join('|')}|all> [--source <slug>|all] [--plain] [--out DIR]
   --to FORMAT      output format, or all
   --source SLUG    source to convert (default all)
+  --plain          remove the (*n*) footnote markers from all texts; files get a .plain suffix
   --out DIR        output folder (default ./out)
   --root DIR       repository root holding data/ (default: this repository)`
 
 /** Reads data/<slug>/*.csv + .meta.json and returns { files, tanzilAdjustments } for the requested formats. */
-export function convertFromRepository(rootDir, slug, formats) {
+export function convertFromRepository(rootDir, slug, formats, options) {
   const meta = JSON.parse(readFileSync(join(rootDir, metaPath(slug)), 'utf8'))
   const verses = parseCanonical(readCanonicalText(rootDir, slug))
-  return convertSource(meta, verses, formats)
+  return convertSource(meta, verses, formats, options)
 }
 
 function main() {
@@ -62,6 +63,7 @@ function main() {
       to: { type: 'string' },
       source: { type: 'string', default: 'all' },
       out: { type: 'string', default: 'out' },
+      plain: { type: 'boolean', default: false },
       root: { type: 'string' },
     },
   })
@@ -77,7 +79,7 @@ function main() {
   }
   const outDir = resolve(values.out)
   for (const slug of slugs) {
-    const { files, tanzilAdjustments } = convertFromRepository(rootDir, slug, formats)
+    const { files, tanzilAdjustments } = convertFromRepository(rootDir, slug, formats, { plain: values.plain })
     writeFiles(outDir, files)
     for (const path of Object.keys(files)) console.log(`wrote ${join(outDir, path)}`)
     for (const [kind, refs] of Object.entries(tanzilAdjustments ?? {})) {

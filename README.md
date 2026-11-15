@@ -97,6 +97,7 @@ old and a new excerpt.
 - A few texts contain line breaks inside a quoted field. Use a CSV reader that supports this, for
   example Python's `csv` module (`open(path, newline='', encoding='utf-8')`) or `csv-parse` in Node.
 - Text is byte-exact: nothing is trimmed, normalized or re-spelled on export.
+  The converter's `--plain` option is the only exception: it removes the footnote markers.
 - No timestamps inside data files. The release version appears only in `meta.json`,
   `CHANGELOG.md` and the release notes.
 
@@ -116,6 +117,7 @@ Convert one translation to one format:
 ```sh
 node scripts/convert.mjs --to tanzil --source king-fahd
 # --to quranenc | tanzil | qurancom | json | all
+# --plain     drop the (*n*) footnote markers from the verse text
 ```
 
 | `--to` | Output |
@@ -124,6 +126,25 @@ node scripts/convert.mjs --to tanzil --source king-fahd
 | `tanzil` | `out/<slug>/tanzil/th.<slug>.txt` |
 | `qurancom` | `out/<slug>/quran-com/<slug>.json` |
 | `json` | `out/<slug>/json/<slug>.json` |
+
+### Plain text without footnote markers
+
+Add `--plain` to get the verse text without its `(*n*)` footnote markers:
+
+```sh
+node scripts/convert.mjs --to json --source king-fahd --plain
+# writes out/king-fahd/json/king-fahd.plain.json
+```
+
+- Every marker is removed, from the verse text and from footnote texts. When a marker stands on its own between spaces or at the end of the
+  text, its leading space goes with it, so no double space is left behind.
+- Nothing else in the text changes. Footnotes are still listed in the formats that carry them
+  (QuranEnc, Quran.com, JSON), but the text no longer points to them. Quran.com output has no
+  `<sup>` tags.
+- Plain files get a `.plain` suffix before the extension, for example
+  `out/<slug>/quranenc/<slug>.plain.csv`, so they never overwrite the default output.
+- Tanzil output is already marker-free, so `--to tanzil --plain` gives the same text as
+  `--to tanzil`.
 
 The output is deterministic: the same canonical files always give the same bytes. For Tanzil, the
 converter prints the verses it adjusted.
