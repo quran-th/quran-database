@@ -7,11 +7,11 @@
     "author": "ศูนย์ตัฟซีรเพื่อการศึกษาอัลกุรอาน (ซาอุดีอาระเบีย)",
     "language": "th"
   },
-  "version": "2026.11.16",
-  "previousVersion": "2026.11.14",
+  "version": "2026.11.16.2",
+  "previousVersion": "2026.11.16",
   "verseCount": 6236,
   "footnoteCount": 0,
-  "sha256": "6fc70324fddb6fd5827d2b9e78356b9d8aee3048bbd636197c5cbd245e9a57f4",
+  "sha256": "390a8aa91070fd3b5b8a09093dca1a31f4af3501292481d5b3e07a986255d38a",
   "emptyTranslations": [],
   "footnoteMismatches": [],
   "embeddedLineBreaks": []
