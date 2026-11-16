@@ -6,8 +6,10 @@ Thai translations of the Quran from the [Open Thai Quran Project](https://quran.
 plain, versioned data files. This is a data-only repository: the only code in it is the converter
 to other formats.
 
-- **One canonical CSV per translation.** Every verse and footnote, with the text exactly as stored.
-- **Every release is a git tag** (`vYYYY.MM.DD`), so any change to the text shows up in `git diff`.
+- **One canonical CSV per surah and translation.** Every verse and footnote, with the text exactly
+  as stored. Each release's assets also have the whole translation as a single CSV.
+- **Every release is a git tag** (`vYYYY.MM.DD`), so any change to the text shows up in `git diff`,
+  and `git log` on one surah file lists every release that changed that surah.
 - **Release notes** separate plain spelling fixes from changes that alter wording, which are
   listed verse by verse.
 - **A converter** produces QuranEnc, Tanzil, Quran.com and JSON formats from the canonical files.
@@ -28,7 +30,21 @@ changes/<version>.csv    every row changed in that release, old and new text
 releases/<version>.md    release notes for that release
 CHANGELOG.md             one short section per release, newest first
 scripts/convert.mjs      converts the canonical files into other formats
+scripts/bundle.mjs       rebuilds the whole translation as one CSV per source (the release asset)
 ```
+
+## Following changes
+
+Each verse is one line of its surah file, so git shows a change as that line, and a word-level
+diff shows the exact characters:
+
+```sh
+git log --oneline -- data/al-mukhtasar/094.csv                       # releases that changed surah 94
+git log -p --word-diff-regex=. -- data/al-mukhtasar/094.csv          # and what changed, letter by letter
+git diff --word-diff-regex=. v2026.11.14 v2026.11.16.2 -- data/al-mukhtasar
+```
+
+`changes/<version>.csv` and `releases/<version>.md` list the same changes per release.
 
 ## Data schemas
 
@@ -100,6 +116,16 @@ old and a new excerpt.
   The converter's `--plain` option is the only exception: it removes the footnote markers.
 - No timestamps inside data files. The release version appears only in `meta.json`,
   `CHANGELOG.md` and the release notes.
+
+## One CSV for the whole translation
+
+Every release on GitHub has a zip asset, `quran-database-<version>.zip`, holding
+`data/<slug>.csv` (all 114 surahs in one file, the same columns) and `data/<slug>.meta.json`. Its
+checksum is the `sha256` in `meta.json`. To build it from a checkout:
+
+```sh
+node scripts/bundle.mjs    # writes out/quran-database-<version>/data/<slug>.csv and .meta.json
+```
 
 ## Converting to other formats
 
