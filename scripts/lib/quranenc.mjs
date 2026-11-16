@@ -10,7 +10,7 @@ export function quranEncFootnotes(footnotes) {
 
 /** `verses` must be in mushaf order; `id` is the running verse number. */
 export function toQuranEncCsv(verses) {
-  const rows = verses.map((verse, index) => [index + 1, verse.sura, verse.aya, verse.translation, quranEncFootnotes(verse.footnotes)])
+  const rows = verses.map((verse, index) => [index + 1, verse.surah, verse.ayah, verse.translation, quranEncFootnotes(verse.footnotes)])
   return formatCsv([QURANENC_HEADER, ...rows])
 }
 

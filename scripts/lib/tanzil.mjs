@@ -43,12 +43,12 @@ export function tanzilTrailer({ name, translator, language, id, source }) {
 export function toTanzil(verses, info) {
   const adjustments = { newlinesReplaced: [], whitespaceTrimmed: [], pipesReplaced: [] }
   const lines = verses.map((verse) => {
-    const ref = `${verse.sura}:${verse.aya}`
+    const ref = `${verse.surah}:${verse.ayah}`
     const result = tanzilText(verse.translation)
     if (result.newlineReplaced) adjustments.newlinesReplaced.push(ref)
     if (result.whitespaceTrimmed) adjustments.whitespaceTrimmed.push(ref)
     if (result.pipeReplaced) adjustments.pipesReplaced.push(ref)
-    return `${verse.sura}|${verse.aya}|${result.text}`
+    return `${verse.surah}|${verse.ayah}|${result.text}`
   })
   return { content: [...lines, ...tanzilTrailer(info)].join('\n') + '\n', adjustments }
 }
@@ -63,10 +63,10 @@ export function readTanzil(content) {
   for (; index < lines.length && lines[index] !== ''; index++) {
     const fields = lines[index].split('|')
     if (fields.length !== 3) throw new Error(`line ${index + 1} has ${fields.length} fields`)
-    const [sura, aya, text] = fields
-    if (!/^[1-9]\d*$/.test(sura) || !/^[1-9]\d*$/.test(aya)) throw new Error(`line ${index + 1} has a bad reference`)
+    const [surah, ayah, text] = fields
+    if (!/^[1-9]\d*$/.test(surah) || !/^[1-9]\d*$/.test(ayah)) throw new Error(`line ${index + 1} has a bad reference`)
     if (/\s$/.test(text)) throw new Error(`line ${index + 1} ends in whitespace`)
-    verses.push({ sura: Number(sura), aya: Number(aya), text })
+    verses.push({ surah: Number(surah), ayah: Number(ayah), text })
   }
   const trailer = lines.slice(index)
   if (trailer[0] !== '' || trailer[1] !== '' || trailer.slice(2).some((line) => !line.startsWith('#'))) {

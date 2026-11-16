@@ -10,11 +10,11 @@ export function stripMarkers(text) {
 }
 
 // Ids are derived from the verse reference, not a running index, so fixing one verse's
-// footnotes never renumbers footnotes elsewhere: sourceId*1e8 + sura*1e5 + aya*100 + n.
-export function footnoteId(sourceId, sura, aya, number) {
+// footnotes never renumbers footnotes elsewhere: sourceId*1e8 + surah*1e5 + ayah*100 + n.
+export function footnoteId(sourceId, surah, ayah, number) {
   if (!Number.isInteger(number) || number < 1 || number > 99) {
-    throw new Error(`footnote number ${number} in ${sura}:${aya} is outside 1..99`)
+    throw new Error(`footnote number ${number} in ${surah}:${ayah} is outside 1..99`)
   }
-  if (!Number.isInteger(aya) || aya < 1 || aya > 999) throw new Error(`aya ${aya} is outside 1..999`)
-  return sourceId * 100_000_000 + sura * 100_000 + aya * 100 + number
+  if (!Number.isInteger(ayah) || ayah < 1 || ayah > 999) throw new Error(`ayah ${ayah} is outside 1..999`)
+  return sourceId * 100_000_000 + surah * 100_000 + ayah * 100 + number
 }

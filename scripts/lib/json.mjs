@@ -9,11 +9,11 @@ export function jsonMeta(source, slug) {
   }
 }
 
-/** Generic map keyed by "sura:aya" in mushaf order; text is stored exactly, markers included. */
+/** Generic map keyed by "surah:ayah" in mushaf order; text is stored exactly, markers included. */
 export function toGenericJson(source, slug, verses) {
   const map = {}
   for (const verse of verses) {
-    map[`${verse.sura}:${verse.aya}`] = {
+    map[`${verse.surah}:${verse.ayah}`] = {
       translation: verse.translation,
       footnotes: verse.footnotes.map((note) => ({ number: note.number, text: note.text })),
     }

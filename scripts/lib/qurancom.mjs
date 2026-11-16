@@ -12,11 +12,11 @@ export function toQuranComTranslation(sourceId, verse) {
   const text = verse.translation.replace(MARKER, (marker, digits) => {
     const number = Number(digits)
     if (!numbers.has(number)) return marker
-    return `<sup foot_note=${footnoteId(sourceId, verse.sura, verse.aya, number)}>${number}</sup>`
+    return `<sup foot_note=${footnoteId(sourceId, verse.surah, verse.ayah, number)}>${number}</sup>`
   })
   const footNotes = {}
-  for (const note of verse.footnotes) footNotes[footnoteId(sourceId, verse.sura, verse.aya, note.number)] = note.text
-  return { verse_key: `${verse.sura}:${verse.aya}`, resource_id: sourceId, text, foot_notes: footNotes }
+  for (const note of verse.footnotes) footNotes[footnoteId(sourceId, verse.surah, verse.ayah, note.number)] = note.text
+  return { verse_key: `${verse.surah}:${verse.ayah}`, resource_id: sourceId, text, foot_notes: footNotes }
 }
 
 export function toQuranCom(source, slug, verses) {

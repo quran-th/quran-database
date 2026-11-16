@@ -36,13 +36,13 @@ scripts/convert.mjs      converts the canonical files into other formats
 
 | Column | Type | Description |
 |--------|------|-------------|
-| `sura` | integer, 1–114 | Surah number |
-| `aya` | integer | Verse number within the surah |
+| `surah` | integer, 1–114 | Surah number |
+| `ayah` | integer | Verse number within the surah |
 | `footnote` | integer or empty | Empty for the verse text; the footnote number (1, 2, …) for a footnote row |
 | `text` | string | The translation text, or the footnote text |
 
 ```csv
-sura,aya,footnote,text
+surah,ayah,footnote,text
 2,2,,คัมภีร์นี้ ไม่มีความสงสัยใด ๆ ในนั้น เป็นคำแนะนำสำหรับบรรดาผู้ยำเกรงเท่านั้น
 2,3,,คือบรรดาผู้ศรัทธาต่อสิ่งเร้นลับ(*1*) และดำรงไว้ซึ่งการละหมาด ...
 2,3,1,หมายถึงสิ่งที่พ้นญาณวิสัยของมนุษย์ ...
@@ -54,7 +54,7 @@ sura,aya,footnote,text
 - **Footnote markers:** `(*n*)` in a verse text points to footnote `n` of that verse. Numbering
   starts at 1 in every verse.
 - **No Arabic text:** there is no Arabic column. Join the rows to your own Arabic text on
-  `(sura, aya)`.
+  `(surah, ayah)`.
 
 ### `data/<slug>.meta.json`
 
@@ -66,14 +66,14 @@ sura,aya,footnote,text
 | `sha256` | Checksum of the whole translation as one CSV: the header once, then the rows of `001.csv` … `114.csv` in order |
 | `emptyTranslations` | Verses published with empty text |
 | `footnoteMismatches` | Verses whose `(*n*)` markers and footnotes do not match |
-| `embeddedLineBreaks` | Rows whose text contains a line break (`sura:aya`, or `sura:aya:n` for a footnote) |
+| `embeddedLineBreaks` | Rows whose text contains a line break (`surah:ayah`, or `surah:ayah:n` for a footnote) |
 
 ### `changes/<version>.csv`
 
 | Column | Description |
 |--------|-------------|
 | `source` | Translation slug |
-| `sura`, `aya`, `footnote` | The row that changed (an empty `footnote` means the verse text) |
+| `surah`, `ayah`, `footnote` | The row that changed (an empty `footnote` means the verse text) |
 | `old`, `new` | Full text before and after. An empty `old` means the row was added; an empty `new` means it was removed. |
 
 ### `releases/<version>.md`
