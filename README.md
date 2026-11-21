@@ -13,6 +13,9 @@ to other formats.
 - **Release notes** separate plain spelling fixes from changes that alter wording, which are
   listed verse by verse.
 - **A converter** produces QuranEnc, Tanzil, Quran.com and JSON formats from the canonical files.
+- **Human-reviewed text.** The translations are the publishers' own work, and a person decides
+  every correction. No text is machine-generated or machine-translated. See
+  [How the text is reviewed](#how-the-text-is-reviewed).
 
 ## Translations
 
@@ -174,6 +177,25 @@ node scripts/convert.mjs --to json --source king-fahd --plain
 
 The output is deterministic: the same canonical files always give the same bytes. For Tanzil, the
 converter prints the verses it adjusted.
+
+## How the text is reviewed
+
+> ข้อความทั้งหมดในคลังข้อมูลนี้เป็นงานแปลของมนุษย์ และทุกการแก้ไขผ่านการตรวจและตัดสินโดยมนุษย์
+> ไม่มีข้อความใดสร้างหรือแปลด้วยเครื่อง
+
+- **The base text is a human translation.** Each translation is its publisher's Thai text, published
+  as it is apart from the corrections listed in the release notes.
+- **No machine text.** No wording in `data/` was generated or translated by software or AI.
+- **A person decides every correction.** Candidate fixes come from checking the text against the
+  printed King Fahd edition (source 3) and the official Mukhtasar (source 4). Software and AI tools
+  help find these candidates, such as possible misspellings, but they never decide a change. A
+  reviewer accepts or rejects each one, today in the proofing tool at
+  [contribute.quran.in.th](https://contribute.quran.in.th), and only accepted fixes reach the data.
+- **Every change is public.** Each release lists its changes in `changes/<version>.csv` and
+  `releases/<version>.md`, and `git log` shows them per surah, so any correction can be checked
+  against the text before it.
+- **Proofreading is ongoing.** Not every juz has been fully re-checked yet. Corrections arrive with
+  each release.
 
 ## Contributing
 
